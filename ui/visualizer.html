@@ -5,12 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C2CAD-Bench 3D Evaluator</title>
     <!-- Phase DBs loaded synchronously with cache-busting so refreshes always get latest results -->
+    <!-- Modern async loader for database assets -->
     <script>
         (function() {
-            var ts = Date.now();
-            ['p1','p2','p3','p4'].forEach(function(p) {
-                document.write('<scr'+'ipt src="../results/showcase_db_'+p+'.js?v='+ts+'"><\/scr'+'ipt>');
-            });
+            const phases = ['p1', 'p2', 'p3', 'p4'];
+            const ts = Date.now();
+            
+            async function loadScripts() {
+                const load = (src) => new Promise((resolve, reject) => {
+                    const tag = document.createElement('script');
+                    tag.src = src;
+                    tag.onload = resolve;
+                    tag.onerror = () => reject(new Error(`Failed to load ${src}`));
+                    document.head.appendChild(tag);
+                });
+
+                try {
+                    // Start loading all phases in parallel
+                    await Promise.all(phases.map(p => load(`../results/showcase_db_${p}.js?v=${ts}`)));
+                    console.log('All phase data loaded successfully.');
+                    window.dispatchEvent(new Event('CG3D_DATA_READY'));
+                } catch (e) {
+                    console.error('Data loading error:', e);
+                    const status = document.getElementById('empty-state');
+                    if (status) {
+                        status.innerHTML = `
+                            <div style="color:#f43f5e; padding: 20px; border: 1px solid rgba(244,63,94,0.2); background: rgba(244,63,94,0.05); border-radius: 8px;">
+                                <h3 style="margin-top:0">⚠ Connection Error</h3>
+                                <p>Failed to load benchmark database files.</p>
+                                <p style="font-size:12px; color:#94a3b8;">Expected path: /results/showcase_db_p1.js</p>
+                                <button onclick="location.reload()" style="margin-top:10px; cursor:pointer; padding:6px 12px; border-radius:4px; background:#1e293b; color:#fff; border:1px solid #475569;">Try Again</button>
+                            </div>
+                        `;
+                    }
+                }
+            }
+            window._loadData = loadScripts;
         })();
     </script>
     <style>
@@ -703,7 +733,12 @@
             renderPhase(window['CG3D_P'+currentPhase]||null, currentModelId);
         });
 
-        switchPhase(1);
+        window.addEventListener('CG3D_DATA_READY', () => {
+            switchPhase(1);
+        });
+
+        // Trigger the async load
+        window._loadData();
 
         // ── Render loop ──────────────────────────────────────────────────────
         function animate() {

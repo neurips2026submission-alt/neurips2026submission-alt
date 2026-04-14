@@ -5,7 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C2CAD-Bench - Complete Model Scoreboard</title>
     <!-- Cache-busting so refreshes always get latest results -->
-    <script>document.write('<scr'+'ipt src="../results/showcase_db.js?v='+Date.now()+'"><\/scr'+'ipt>');</script>
+    <!-- Modern async loader for database assets -->
+    <script>
+        (function() {
+            const ts = Date.now();
+            async function loadData() {
+                const load = (src) => new Promise((resolve, reject) => {
+                    const tag = document.createElement('script');
+                    tag.src = src;
+                    tag.onload = resolve;
+                    tag.onerror = () => reject(new Error(`Failed to load ${src}`));
+                    document.head.appendChild(tag);
+                });
+
+                try {
+                    await load(`../results/showcase_db.js?v=${ts}`);
+                    console.log('Scoreboard data loaded successfully.');
+                    window.dispatchEvent(new Event('CG3D_SCORE_READY'));
+                } catch (e) {
+                    console.error('Scoreboard load error:', e);
+                    const status = document.getElementById('table-body');
+                    if (status) {
+                        status.innerHTML = `<tr><td colspan="4" style="text-align:center; padding: 40px; color:#f43f5e;">
+                            ⚠ Failed to load scoreboard data. Ensure results/showcase_db.js exists.
+                        </td></tr>`;
+                    }
+                }
+            }
+            window._loadData = loadData;
+        })();
+    </script>
     <style>
         body { margin: 0; background: #0b1121; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #f8fafc; padding: 40px;}
 
@@ -251,9 +280,16 @@
         }
         function scoreClass(v) { return v > 80 ? 'good' : (v > 40 ? 'warn' : 'bad'); }
 
-        document.addEventListener("DOMContentLoaded", () => {
+        window.addEventListener('CG3D_SCORE_READY', () => {
+            initScoreboard();
+        });
+
+        // Trigger the async load
+        window._loadData();
+
+        function initScoreboard() {
             if (!window.SHOWCASE_DB) {
-                document.getElementById('table-body').innerHTML = `<tr><td colspan="4" style="text-align:center; padding: 40px;">Database Not Found. Run: python3 V2/runners/run_unified.py --all</td></tr>`;
+                document.getElementById('table-body').innerHTML = `<tr><td colspan="4" style="text-align:center; padding: 40px;">Database Not Found.</td></tr>`;
                 return;
             }
 
