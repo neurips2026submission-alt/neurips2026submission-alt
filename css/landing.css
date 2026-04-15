@@ -177,6 +177,8 @@
 }
 
 .methodology-img img {
+    max-width: 100%;
+    height: auto;
     box-shadow: 0 15px 35px rgba(0,0,0,0.1);
 }
 
@@ -231,6 +233,20 @@
     .gallery-grid {
         grid-template-columns: 1fr;
     }
+}
+
+.hero-fig {
+    margin: 60px auto 0;
+    max-width: 900px;
+}
+
+.hero-fig img {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: white;
 }
 
 .gallery-card {
