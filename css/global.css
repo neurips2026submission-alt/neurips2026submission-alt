@@ -143,29 +143,6 @@ nav .container, .nav-container {
     display: none;
 }
 
-/* --- Dark Nav Variant --- */
-body.dark-theme nav {
-    background: rgba(11, 17, 33, 0.85);
-    border-bottom: 1px solid var(--dark-border);
-}
-
-body.dark-theme .nav-brand {
-    color: var(--dark-accent);
-}
-
-body.dark-theme .nav-links a {
-    color: var(--dark-text-muted);
-}
-
-body.dark-theme .nav-links a:hover, body.dark-theme .nav-links a.active {
-    color: white;
-}
-
-body.dark-theme .nav-links a.cta {
-    background: var(--dark-accent);
-    color: var(--dark-bg);
-}
-
 /* --- Footer --- */
 footer {
     padding: 80px 0 60px;
@@ -213,20 +190,8 @@ footer {
     font-size: 14px;
 }
 
-body.dark-theme footer {
-    background: var(--dark-bg-subtle);
-    border-top: 1px solid var(--dark-border);
-}
-
-body.dark-theme .footer-links a {
-    color: var(--dark-text-muted);
-}
-
-body.dark-theme .footer-links a:hover {
-    color: white;
-}
-
 /* --- Utilities --- */
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
