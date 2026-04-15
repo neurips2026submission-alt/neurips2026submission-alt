@@ -11,470 +11,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <style>
-        :root {
-            --bg-page: #fdfdfe;
-            --bg-subtle: #f8fafc;
-            --bg-grid: rgba(37, 99, 235, 0.03);
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --text-light: #64748b;
-            --accent: #2563eb;
-            --accent-soft: rgba(37, 99, 235, 0.1);
-            --accent-hover: #1d4ed8;
-            --border: #e2e8f0;
-            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-            --radius: 12px;
-            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
-            --font-heading: 'Outfit', sans-serif;
-        }
-
-        /* --- Animations --- */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .reveal {
-            opacity: 0;
-            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0) !important;
-        }
-
-        .reveal-up { transform: translateY(40px); }
-
-        * {
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background: var(--bg-page);
-            color: var(--text-main);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-top: 0;
-        }
-
-        section {
-            padding: 80px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        section:nth-child(even) {
-            background-color: var(--bg-subtle);
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* --- Progress Bar --- */
-        #progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(to right, var(--accent), #c084fc);
-            z-index: 1001;
-            width: 0%;
-            transition: width 0.1s;
-        }
-
-        /* --- Navigation --- */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(12px) saturate(180%);
-            -webkit-backdrop-filter: blur(12px) saturate(180%);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
-            padding: 14px 0;
-            transition: background 0.3s;
-        }
-
-        nav .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-brand {
-            font-weight: 800;
-            font-size: 1.25rem;
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 24px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 500;
-            font-size: 14px;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        .nav-links a.cta {
-            color: var(--accent);
-            font-weight: 700;
-            border-bottom: 2px solid var(--accent);
-        }
-
-        .nav-links a.active-link {
-            color: var(--accent) !important;
-            border-bottom: 2px solid var(--accent);
-        }
-
-        /* --- Hero --- */
-        .hero {
-            padding: 140px 0 80px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.05), transparent),
-                        radial-gradient(circle at bottom left, rgba(168, 85, 247, 0.05), transparent);
-        }
-
-        #hero-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.6;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            padding: 6px 16px;
-            background: var(--accent-soft);
-            color: var(--accent);
-            border-radius: 100px;
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            margin-bottom: 16px;
-            letter-spacing: -0.025em;
-        }
-
-        .hero p.subtitle {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 800px;
-            margin: 0 auto 40px;
-        }
-
-        .authors {
-            margin-bottom: 40px;
-            color: var(--text-main);
-            font-weight: 500;
-            font-size: 1.1rem;
-        }
-
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 60px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 24px;
-            border-radius: var(--radius);
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-            font-size: 15px;
-        }
-
-        .btn-primary {
-            background-color: var(--accent);
-            color: white;
-            border: 1px solid var(--accent);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background-color: white;
-            color: var(--text-main);
-            border: 1px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--bg-subtle);
-            border-color: var(--text-light);
-            transform: translateY(-1px);
-        }
-
-        /* --- Figures --- */
-        figure {
-            margin: 0 0 40px 0;
-            text-align: center;
-        }
-
-        figure img {
-            max-width: 100%;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            background: white;
-        }
-
-        figure figcaption {
-            margin-top: 12px;
-            font-size: 14px;
-            color: var(--text-light);
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-fig img {
-            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-            border: none;
-        }
-
-        /* --- Content Blocks --- */
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        .section-header h2 {
-            font-size: 2rem;
-            margin-bottom: 8px;
-        }
-
-        .section-header p {
-            color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .highlights-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
-        }
-
-        .highlight-item {
-            background: white;
-            padding: 30px;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            box-shadow: var(--card-shadow);
-        }
-
-        .highlight-item h3 {
-            font-size: 1.25rem;
-            margin-bottom: 12px;
-            color: var(--accent);
-        }
-
-        .highlight-item p {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin: 0;
-        }
-
-        .methodology-box {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            background: white;
-            padding: 40px;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-        }
-
-        @media (max-width: 800px) {
-            .methodology-box {
-                flex-direction: column;
-            }
-        }
-
-        .methodology-text {
-            flex: 1;
-        }
-
-        .methodology-img {
-            flex: 1;
-        }
-
-        /* --- Side by Side Analysis --- */
-        .analysis-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-
-        @media (max-width: 900px) {
-            .analysis-row {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .analysis-item h3 {
-            font-size: 1.2rem;
-            margin-bottom: 16px;
-        }
-
-        /* --- Gallery --- */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        @media (max-width: 700px) {
-            .gallery-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .gallery-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-        }
-
-        .gallery-card .img-container {
-            padding: 10px;
-            background: #f1f5f9;
-        }
-
-        .gallery-card img {
-            width: 100%;
-            display: block;
-            border-radius: 4px;
-        }
-
-        .gallery-info {
-            padding: 20px;
-        }
-
-        .gallery-info h4 {
-            font-size: 1rem;
-            margin-bottom: 8px;
-        }
-
-        .gallery-info p {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin: 0;
-        }
-
-        /* --- Citation --- */
-        .citation-section {
-            background-color: var(--text-main);
-            color: white;
-            padding: 60px 0;
-        }
-
-        .citation-section h2 {
-            color: white;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .citation-box {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 24px;
-            border-radius: var(--radius);
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 13px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow-x: auto;
-        }
-
-        .copy-btn {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-        }
-
-        .copy-btn:hover { background: rgba(255, 255, 255, 0.2); }
-
-        /* --- Footer --- */
-        footer {
-            padding: 60px 0;
-            text-align: center;
-            color: var(--text-light);
-            font-size: 14px;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .footer-links a:hover { color: var(--accent); }
-
-    </style>
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/landing.css">
 </head>
 <body>
     <div id="progress-bar"></div>
@@ -511,23 +50,23 @@
 
             <figure class="hero-fig reveal reveal-up">
                 <img src="results/fig1_overall_rankings.png" alt="Overall Model Rankings Heatmap">
-                <figcaption><strong>Figure 1:</strong> Comparative evaluation of 13 frontier Large Language Models across the C2CAD-Bench spectrum.</figcaption>
+                <figcaption style="margin-top: 16px; font-size: 15px; color: var(--text-light);"><strong>Figure 1:</strong> Comparative evaluation of 13 frontier Large Language Models across the C2CAD-Bench spectrum.</figcaption>
             </figure>
         </div>
     </div>
 
-    <section id="abstract" class="reveal reveal-up">
+    <section id="abstract" class="section-padding reveal reveal-up">
         <div class="container">
-            <div style="max-width: 850px; margin: 0 auto; background: var(--bg-subtle); padding: 40px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--card-shadow);">
-                <h2 style="text-align: center; margin-bottom: 24px; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-light);">Abstract</h2>
-                <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text-main); font-style: italic; text-align: justify; margin: 0;">
-                    AI-assisted CAD design relies on a prompt-to-code-to-CAD pipeline, where an LLM generates code for a CAD engine from a natural-language description. Existing benchmarks combine programming proficiency with spatial understanding, a syntactically correct script that places every part at the wrong coordinate passes all execution-based checks, moreover image-based evaluation cannot inspect internal geometry such as lattice connectivity or clearance fits. We introduce <strong>C2CAD-BENCH</strong>, a benchmark that isolates 3D spatial reasoning from code-generation proficiency by removing the code layer entirely. Models receive a natural-language engineering specification and must produce a JSON array of geometric primitives, scored deterministically against parametric ground truth without code execution or rendering. Prompts follow a zero-scaffolding methodology that supplies only physical intent, requiring models to derive every coordinate from first principles. The benchmark comprises 25 test families across four phases of cognitive demand (75 test cases, up to 805 shapes), evaluated with a gated three-axis scoring pipeline (Coverage, Geometry, Semantic). Evaluation of 13 frontier LLMs from five providers reveals a persistent coverage–geometry gap of roughly 19 points, systematic primitive type confusion, and that constraint complexity rather than shape count drives difficulty.
+            <div class="abstract-container">
+                <h2 class="abstract-title">Abstract</h2>
+                <p class="abstract-text">
+                    AI-assisted CAD design relies on a prompt-to-code-to-CAD pipeline, where an LLM generates code for a CAD engine from a natural-language description. Existing benchmarks combine programming proficiency with spatial understanding; reaching a syntactically correct script that places every part at the wrong coordinate passes all execution-based checks. Moreover, image-based evaluation cannot inspect internal geometry such as lattice connectivity or clearance fits. We introduce <strong>C2CAD-BENCH</strong>, a benchmark that isolates 3D spatial reasoning from code-generation proficiency by removing the code layer entirely. Models receive a natural-language engineering specification and must produce a JSON array of geometric primitives, scored deterministically against parametric ground truth without code execution or rendering. Prompts follow a zero-scaffolding methodology that supplies only physical intent, requiring models to derive every coordinate from first principles. The benchmark comprises 25 test families across four phases of cognitive demand (75 test cases, up to 805 shapes), evaluated with a gated three-axis scoring pipeline (Coverage, Geometry, Semantic). Evaluation of 13 frontier LLMs from five providers reveals a persistent coverage–geometry gap of roughly 19 points, systematic primitive type confusion, and that constraint complexity rather than shape count drives difficulty.
                 </p>
             </div>
         </div>
     </section>
 
-    <section id="about">
+    <section id="about" class="section-padding">
         <div class="container">
             <div class="section-header">
                 <h2>Benchmark Objectives</h2>
@@ -538,14 +77,14 @@
                 <div class="methodology-text">
                     <p>C2CAD-Bench evaluates the multi-step spatial reasoning capabilities of LLMs in generating deterministic CAD geometry. The benchmark requires models to map high-level engineering specifications to precise parametric primitives.</p>
                     <p>Unlike previous shape-focused benchmarks, C2CAD-Bench emphasizes:</p>
-                    <ul style="font-size: 15px; color: var(--text-muted);">
-                        <li><strong>Geometric Constraints:</strong> Concentricity, patterns, and pathing.</li>
-                        <li><strong>Topological Validity:</strong> Connectivity and manifold verification.</li>
-                        <li><strong>Reasoning Depth:</strong> Multi-phase complexity from primitives to functional assemblies.</li>
+                    <ul style="font-size: 16px; color: var(--text-muted); margin-top: 20px;">
+                        <li style="margin-bottom: 12px;"><strong>Geometric Constraints:</strong> Concentricity, patterns, and pathing.</li>
+                        <li style="margin-bottom: 12px;"><strong>Topological Validity:</strong> Connectivity and manifold verification.</li>
+                        <li style="margin-bottom: 12px;"><strong>Reasoning Depth:</strong> Multi-phase complexity from primitives to functional assemblies.</li>
                     </ul>
                 </div>
                 <div class="methodology-img">
-                    <img src="results/fig2_score_components.png" alt="Metric Decomposition" style="width: 100%; border-radius: 8px;">
+                    <img src="results/fig2_score_components.png" alt="Metric Decomposition" style="width: 100%; border-radius: 12px;">
                 </div>
             </div>
 
@@ -566,30 +105,30 @@
         </div>
     </section>
 
-    <section id="benchmarks">
+    <section id="benchmarks" class="section-padding" style="background-color: var(--bg-subtle);">
         <div class="container">
             <div class="section-header">
                 <h2>Benchmark Structure & Phases</h2>
                 <p>Tracking model performance across dimensionality and constraint complexity.</p>
             </div>
 
-            <figure class="reveal reveal-up">
-                <img src="results/fig4_phase_performance.png" alt="Phase Performance Analysis">
-                <figcaption><strong>Figure 2:</strong> Model performance distributions across the four benchmark phases, highlighting the transition from basic forms to engineering assemblies.</figcaption>
+            <figure class="reveal reveal-up" style="margin-bottom: 80px;">
+                <img src="results/fig4_phase_performance.png" alt="Phase Performance Analysis" style="width: 100%; border-radius: var(--radius); box-shadow: var(--card-shadow); background: white;">
+                <figcaption style="margin-top: 16px; font-size: 15px; text-align: center; color: var(--text-light);"><strong>Figure 2:</strong> Model performance distributions across the four benchmark phases, highlighting the transition from basic forms to engineering assemblies.</figcaption>
             </figure>
 
             <div class="analysis-row">
                 <div class="analysis-item reveal reveal-up">
-                    <h3>Spatial Reasoning Signatures</h3>
-                    <img src="results/fig9_radar_profiles.png" alt="Radar Profiles" style="width: 100%;">
-                    <p style="font-size: 14px; color: var(--text-muted); margin-top: 15px;">
+                    <h3 style="margin-bottom: 24px;">Spatial Reasoning Signatures</h3>
+                    <img src="results/fig9_radar_profiles.png" alt="Radar Profiles" style="width: 100%; border-radius: var(--radius); border: 1px solid var(--border); background: white;">
+                    <p style="font-size: 14px; color: var(--text-muted); margin-top: 20px;">
                         Radar profiles reveal the "spatial signature" of each model family, identifying distinctive reasoning biases and architectural strengths.
                     </p>
                 </div>
                 <div class="analysis-item reveal reveal-up" style="transition-delay: 0.2s;">
-                    <h3>Performance Distributions</h3>
-                    <img src="results/fig11_violin_distributions.png" alt="Violin Distributions" style="width: 100%;">
-                    <p style="font-size: 14px; color: var(--text-muted); margin-top: 15px;">
+                    <h3 style="margin-bottom: 24px;">Performance Distributions</h3>
+                    <img src="results/fig11_violin_distributions.png" alt="Violin Distributions" style="width: 100%; border-radius: var(--radius); border: 1px solid var(--border); background: white;">
+                    <p style="font-size: 14px; color: var(--text-muted); margin-top: 20px;">
                         Statistical breakdown of score density across different model vendors, showing the stability and ceiling of current spatial models.
                     </p>
                 </div>
@@ -597,7 +136,7 @@
         </div>
     </section>
 
-    <section id="analysis">
+    <section id="analysis" class="section-padding">
         <div class="container">
             <div class="section-header">
                 <h2>Scaling & Failure Modes</h2>
@@ -607,24 +146,24 @@
             <div class="analysis-row">
                 <div class="analysis-item">
                     <h3>Difficulty Scaling</h3>
-                    <img src="results/fig5_difficulty_scaling.png" alt="Difficulty Scaling" style="width: 100%;">
-                    <p style="font-size: 14px; color: var(--text-muted); margin-top: 12px;">Tracking the degradation of coverage and semantic logic as tasks transition from single primitives to multi-part engineering systems.</p>
+                    <img src="results/fig5_difficulty_scaling.png" alt="Difficulty Scaling" style="width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+                    <p style="font-size: 14px; color: var(--text-muted); margin-top: 16px;">Tracking the degradation of coverage and semantic logic as tasks transition from single primitives to multi-part engineering systems.</p>
                 </div>
                 <div class="analysis-item">
                     <h3>Hallucination Profiles</h3>
-                    <img src="results/fig13_hallucination_analysis.png" alt="Hallucination Analysis" style="width: 100%;">
-                    <p style="font-size: 14px; color: var(--text-muted); margin-top: 12px;">Distinguishing between structural under-production and excessive "geometric hallucinations" during complex pathing tasks.</p>
+                    <img src="results/fig13_hallucination_analysis.png" alt="Hallucination Analysis" style="width: 100%; border-radius: 8px; border: 1px solid var(--border);">
+                    <p style="font-size: 14px; color: var(--text-muted); margin-top: 16px;">Distinguishing between structural under-production and excessive "geometric hallucinations" during complex pathing tasks.</p>
                 </div>
             </div>
 
-            <figure>
-                <img src="results/fig3_family_heatmap.png" alt="Global Heatmap">
-                <figcaption><strong>Figure 3:</strong> Global heatmap of global scores across all 25 test families, revealing specific failure modes in engineering scenarios.</figcaption>
+            <figure style="margin-top: 60px;">
+                <img src="results/fig3_family_heatmap.png" alt="Global Heatmap" style="width: 100%; border-radius: var(--radius); box-shadow: var(--card-shadow); background: white;">
+                <figcaption style="margin-top: 16px; font-size: 15px; text-align: center; color: var(--text-light);"><strong>Figure 3:</strong> Global heatmap of global scores across all 25 test families, revealing specific failure modes in engineering scenarios.</figcaption>
             </figure>
         </div>
     </section>
 
-    <section id="gallery">
+    <section id="gallery" class="section-padding" style="background-color: var(--bg-subtle);">
         <div class="container">
             <div class="section-header">
                 <h2>Showcase Gallery</h2>
@@ -638,7 +177,7 @@
                     </div>
                     <div class="gallery-info">
                         <h4>Spiral Staircase (Phase 1)</h4>
-                        <p>Tests trigonometric accuracy and polar pattern repetition in vertical space.</p>
+                        <p style="font-size: 14px; color: var(--text-muted); margin-top: 8px;">Tests trigonometric accuracy and polar pattern repetition in vertical space.</p>
                     </div>
                 </div>
                 <div class="gallery-card reveal reveal-up" style="transition-delay: 0.2s;">
@@ -647,7 +186,7 @@
                     </div>
                     <div class="gallery-info">
                         <h4>Radiolarian Skeleton (Phase 4)</h4>
-                        <p>Tests high-order recursive patterns and geodesic frame generation in bio-inspired CAD.</p>
+                        <p style="font-size: 14px; color: var(--text-muted); margin-top: 8px;">Tests high-order recursive patterns and geodesic frame generation in bio-inspired CAD.</p>
                     </div>
                 </div>
             </div>
@@ -655,11 +194,11 @@
     </section>
 
     <section class="citation-section" id="citation">
-        <div class="container">
+        <div class="container" style="max-width: 800px;">
             <h2>Citation</h2>
             <div class="citation-box">
-                <button class="copy-btn" onclick="copyCitation()">Copy</button>
-                <pre id="bibtex">@article{c2cad2026,
+                <button class="copy-btn" onclick="copyCitation()">Copy BibTeX</button>
+                <pre id="bibtex" style="margin: 0;">@article{c2cad2026,
   title={C2CAD-Bench: A Large-Scale Benchmark for 3D Spatial Reasoning in CAD},
   author={C2CAD-Bench Research Team},
   journal={arXiv preprint arXiv:26xx.xxxxx},
@@ -670,57 +209,27 @@
     </section>
 
     <footer>
-        <div class="container">
+        <div class="footer-container">
+            <a href="#" class="footer-logo">C2CAD-Bench</a>
             <div class="footer-links">
                 <a href="#abstract">Abstract</a>
                 <a href="#about">About</a>
                 <a href="./ui/results.html">Scoreboard</a>
                 <a href="./ui/visualizer.html">3D Viewer</a>
             </div>
-            <p>&copy; 2026 C2CAD-Bench Research Team. Released under the MIT License.</p>
+            <p class="footer-copy">&copy; 2026 C2CAD-Bench Research Team. Released under the MIT License.</p>
         </div>
     </footer>
 
+    <script src="js/background.js"></script>
     <script>
-        // WebGL-lite Background Animation
-        (function() {
-            const canvas = document.getElementById('hero-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            let w, h;
-
-            function resize() {
-                w = canvas.width = window.innerWidth;
-                h = canvas.height = canvas.parentElement.offsetHeight;
-            }
-            window.addEventListener('resize', resize);
-            resize();
-
-            const grid = 50;
-            let offset = 0;
-
-            function draw() {
-                ctx.clearRect(0, 0, w, h);
-                ctx.strokeStyle = 'rgba(37, 99, 235, 0.08)';
-                ctx.lineWidth = 1;
-
-                // Dynamic Perspective Grid
-                ctx.beginPath();
-                for (let x = -grid; x < w + grid; x += grid) {
-                    ctx.moveTo(x + (offset % grid), 0);
-                    ctx.lineTo(x + (offset % grid) - 200, h);
-                }
-                for (let y = 0; y < h; y += grid) {
-                    ctx.moveTo(0, y);
-                    ctx.lineTo(w, y);
-                }
-                ctx.stroke();
-
-                offset += 0.2;
-                requestAnimationFrame(draw);
-            }
-            draw();
-        })();
+        // Reading Progress
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        });
 
         // Scroll Reveal logic
         const observerOptions = {
@@ -738,20 +247,12 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Reading Progress
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.getElementById("progress-bar").style.width = scrolled + "%";
-        });
-
         function copyCitation() {
             const bib = document.getElementById('bibtex').innerText;
             navigator.clipboard.writeText(bib).then(() => {
                 const btn = document.querySelector('.copy-btn');
                 btn.innerText = 'Copied!';
-                setTimeout(() => btn.innerText = 'Copy', 2000);
+                setTimeout(() => btn.innerText = 'Copy BibTeX', 2000);
             });
         }
 
@@ -771,9 +272,7 @@
             navLinks.forEach(link => {
                 link.classList.remove('active-link');
                 const href = link.getAttribute('href');
-                if (href === '#' && current === '') {
-                    // Hero/Top state
-                } else if (href.includes(current) && current !== '') {
+                if (href.includes(current) && current !== '') {
                     if (!link.classList.contains('cta')) {
                         link.classList.add('active-link');
                     }
