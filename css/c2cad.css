@@ -1,0 +1,131 @@
+/* C2CAD-Bench Layout - Academic Style inspired by BrepDiff/Nerfies */
+
+:root {
+    --primary: #143163;
+    --primary-dark: #14274e;
+    --secondary: #50549b;
+    --text-main: #363636;
+    --bg-light: #f5f5f5;
+    --border-color: #e5e5e5;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    color: var(--text-main);
+}
+
+.publication-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 1.5rem !important;
+}
+
+.publication-authors {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+}
+
+.author-block {
+    display: inline-block;
+}
+
+.publication-institute {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.link-blocks {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.link-button {
+    color: #f5f5f5 !important;
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    border-radius: 290486px !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.link-button:hover {
+    background-color: var(--secondary) !important;
+    border-color: var(--secondary) !important;
+}
+
+.section-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: 2rem !important;
+    text-align: center;
+}
+
+.abstract-content {
+    text-align: justify;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.method-box, .result-box {
+    margin-bottom: 3rem;
+}
+
+.method-box img, .result-box img {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+}
+
+.bibtex-box {
+    background-color: var(--bg-light);
+    font-family: "Roboto Mono", monospace;
+    padding: 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.bibtex-box pre {
+    background: transparent;
+    padding: 0;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 0.8rem;
+}
+
+.footer {
+    padding: 3rem 1.5rem 6rem;
+    background-color: white;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive adjustment */
+@media screen and (max-width: 768px) {
+    .publication-title {
+        font-size: 2rem !important;
+    }
+}
