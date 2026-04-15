@@ -81,13 +81,20 @@ nav .container, .nav-container {
     align-items: center;
 }
 
-.nav-brand {
-    font-family: var(--font-heading);
+.nav-brand, .navbar-logo {
+    font-family: 'Josefin Sans', 'Outfit', sans-serif;
     font-weight: 800;
-    font-size: 1.35rem;
-    color: var(--accent);
+    font-size: 1.5rem;
+    color: var(--accent) !important;
     text-decoration: none;
     letter-spacing: -0.01em;
+    transition: all 0.3s ease;
+}
+
+.navbar-logo:hover {
+    background-color: transparent !important;
+    color: var(--accent-hover) !important;
+    transform: translateY(-1px);
 }
 
 .nav-links {
