@@ -64,71 +64,64 @@ nav {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.8) !important;
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
     border-bottom: 1px solid rgba(226, 232, 240, 0.5);
-    padding: 14px 0;
+    padding: 8px 0;
     transition: all 0.3s ease;
 }
 
-nav .container, .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.navbar {
+    background: transparent !important;
 }
 
-.nav-brand, .navbar-logo {
+.navbar-item {
+    color: var(--text-muted) !important;
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    margin: 0 4px;
+}
+
+.navbar-item:hover {
+    background-color: var(--accent-soft) !important;
+    color: var(--accent) !important;
+}
+
+.navbar-item.is-active {
+    background-color: transparent !important;
+    color: var(--accent) !important;
+    font-weight: 700 !important;
+}
+
+.navbar-item.is-active::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 1.25rem;
+    right: 1.25rem;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 10px;
+}
+
+.navbar-logo {
     font-family: 'Josefin Sans', 'Outfit', sans-serif;
     font-weight: 800;
     font-size: 1.5rem;
     color: var(--accent) !important;
     text-decoration: none;
     letter-spacing: -0.01em;
-    transition: all 0.3s ease;
+    background-color: transparent !important;
+    margin: 0;
 }
 
 .navbar-logo:hover {
     background-color: transparent !important;
     color: var(--accent-hover) !important;
     transform: translateY(-1px);
-}
-
-.nav-links {
-    display: flex;
-    gap: 28px;
-    align-items: center;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--text-muted);
-    font-weight: 500;
-    font-size: 14px;
-    position: relative;
-}
-
-.nav-links a:hover {
-    color: var(--accent);
-}
-
-.nav-links a.active, .nav-links a.active-link {
-    color: var(--accent);
-    font-weight: 700;
-}
-
-.nav-links a.active::after, .nav-links a.active-link::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--accent);
-    border-radius: 2px;
 }
 
 .nav-links a.cta {
