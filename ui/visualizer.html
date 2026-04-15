@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C2CAD-Bench - Visualizer</title>
+    <title>V2CAD 3D Visualizer</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@300;400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
     
+    <!-- Frameworks -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/5fd1dd8417.js" crossorigin="anonymous"></script>
+
     <!-- Styles -->
-    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/v2cad.css">
     <link rel="stylesheet" href="../css/visualizer.css">
     
     <!-- Data Loader -->
@@ -37,10 +41,10 @@
                     const status = document.getElementById('empty-state');
                     if (status) {
                         status.innerHTML = `
-                            <div style="color:#f43f5e; padding: 40px; border: 1px solid rgba(244,63,94,0.2); background: rgba(244,63,94,0.05); border-radius: 12px; text-align:center;">
-                                <h3 style="margin-top:0">⚠ Connection Error</h3>
+                            <div class="notification is-danger is-light has-text-centered">
+                                <h3 class="title is-4">⚠ Connection Error</h3>
                                 <p>Failed to load benchmark database files.</p>
-                                <button onclick="location.reload()" class="hbtn" style="margin-top:16px; background:#1e293b; color:#fff;">Try Again</button>
+                                <button onclick="location.reload()" class="button is-dark mt-4">Try Again</button>
                             </div>
                         `;
                     }
@@ -53,51 +57,62 @@
 <body class="dark-theme">
     <canvas id="main-canvas"></canvas>
 
-    <nav>
-        <div class="nav-container">
-            <a href="../index.html" class="nav-brand">C2CAD-Bench</a>
-            <div class="nav-links">
-                <a href="../index.html">Abstract</a>
-                <a href="../index.html#about">About</a>
-                <a href="../index.html#benchmarks">Benchmarks</a>
-                <a href="results.html">Scoreboard</a>
-                <a href="visualizer.html" class="active">3D Visualizer</a>
+    <nav class="navbar is-transparent" role="navigation" aria-label="main navigation" style="background: rgba(10, 10, 10, 0.8) !important; backdrop-filter: blur(8px);">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="../index.html" style="font-family:'Josefin Sans'; font-weight:700; font-size:1.5rem; color:#fff;">
+                    V2CAD
+                </a>
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item has-text-white" href="../index.html">Abstract</a>
+                    <a class="navbar-item has-text-white" href="../index.html#benchmarks">Benchmarks</a>
+                    <a class="navbar-item has-text-white" href="results.html">Scoreboard</a>
+                    <a class="navbar-item has-text-white is-active" href="visualizer.html">3D Visualizer</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div id="ui-controls">
-        <div style="display:flex; align-items:center; gap:16px;">
-            <h3>Model Selection:</h3>
-            <select id="modelSelector"></select>
+    <div id="ui-controls" class="is-flex is-align-items-center is-justify-content-space-between p-4" style="background: rgba(20, 20, 20, 0.7); border-radius: 12px; margin: 20px; border: 1px solid rgba(255,255,255,0.1);">
+        <div class="field is-horizontal is-marginless">
+            <div class="field-label is-normal">
+                <label class="label has-text-white" style="font-family:'Quicksand'; font-weight:600;">Model Selection:</label>
+            </div>
+            <div class="field-body">
+                <div class="control">
+                    <div class="select is-rounded is-small">
+                        <select id="modelSelector"></select>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div style="display:flex;gap:16px;align-items:center;">
-            <button onclick="location.reload(true)" class="hbtn">↻ Reload</button>
-            <div id="overallScore" class="overall-badge"></div>
+        <div class="is-flex is-align-items-center" style="gap:16px;">
+            <button onclick="location.reload(true)" class="button is-small is-rounded is-dark">↻ Reload</button>
+            <div id="overallScore" class="overall-badge" style="font-family:'Josefin Sans';"></div>
         </div>
     </div>
 
-    <div id="phase-bar">
-        <button class="phase-tab active" data-phase="1">Phase 1 <span class="badge">18</span></button>
-        <button class="phase-tab"        data-phase="2">Phase 2 <span class="badge">18</span></button>
-        <button class="phase-tab"        data-phase="3">Phase 3 <span class="badge">18</span></button>
-        <button class="phase-tab"        data-phase="4">Phase 4 <span class="badge">21</span></button>
+    <div id="phase-bar" class="tabs is-toggle is-toggle-rounded is-centered mb-4">
+        <ul>
+            <li class="is-active" data-phase="1"><a>Phase 1</a></li>
+            <li data-phase="2"><a>Phase 2</a></li>
+            <li data-phase="3"><a>Phase 3</a></li>
+            <li data-phase="4"><a>Phase 4</a></li>
+        </ul>
     </div>
 
     <div id="content">
-        <div id="empty-state">Preparing 3D environment...</div>
+        <div id="empty-state" class="has-text-grey-light" style="font-family:'Quicksand';">Preparing 3D environment...</div>
     </div>
 
-    <footer>
-        <div class="footer-container">
-            <a href="../index.html" class="footer-logo">C2CAD-Bench</a>
-            <div class="footer-links">
-                <a href="../index.html">Abstract</a>
-                <a href="../index.html#about">About</a>
-                <a href="results.html">Scoreboard</a>
-                <a href="visualizer.html">3D Viewer</a>
-            </div>
-            <p class="footer-copy">&copy; 2026 C2CAD-Bench Research Team. Released under the MIT License.</p>
+    <footer class="footer p-4" style="background: transparent;">
+        <div class="container has-text-centered has-text-white-ter">
+            <p>
+                <strong>V2CAD</strong> by Anonymous Authors. 
+                Released under the MIT License.
+            </p>
         </div>
     </footer>
 
@@ -111,7 +126,18 @@
         }
     </script>
 
-    <script src="../js/background.js"></script>
     <script type="module" src="../js/visualizer.js"></script>
+    <script>
+        // Start loading data
+        window._loadData();
+        
+        // Sync Bulma tabs with visualizer.js expectations
+        document.querySelectorAll('#phase-bar li').forEach(tab => {
+            tab.onclick = function() {
+                document.querySelectorAll('#phase-bar li').forEach(t => t.classList.remove('is-active'));
+                this.classList.add('is-active');
+            };
+        });
+    </script>
 </body>
 </html>

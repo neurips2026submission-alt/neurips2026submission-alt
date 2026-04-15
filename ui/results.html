@@ -3,16 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C2CAD-Bench - Scoreboard</title>
+    <title>V2CAD Scoreboard</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@300;400;500;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
     
+    <!-- Frameworks -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/5fd1dd8417.js" crossorigin="anonymous"></script>
+
     <!-- Styles -->
-    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/v2cad.css">
     <link rel="stylesheet" href="../css/dashboard.css">
     
+    <style>
+        /* Table overrides for light theme */
+        .scoreboard-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid #eee;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            background: #f8fafc;
+            color: #143163;
+            font-family: 'Josefin Sans', sans-serif;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            padding: 16px !important;
+        }
+        td {
+            padding: 12px 16px !important;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .dashboard-header h1 {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 700;
+            color: #14274e;
+        }
+        .phase-tab {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+        }
+    </style>
+
     <!-- Data Loader -->
     <script>
         (function() {
@@ -36,7 +77,7 @@
                     if (status) {
                         status.innerHTML = `<tr><td colspan="100%" style="text-align:center; padding: 60px; color:#f43f5e; background:rgba(244,63,94,0.05); border-radius:12px;">
                             <h3 style="margin-top:0">⚠ Data Load Error</h3>
-                            <p>Could not load the evaluation database. Please ensure results/showcase_db.js exists.</p>
+                            <p>Could not load the evaluation database.</p>
                         </td></tr>`;
                     }
                 }
@@ -45,58 +86,65 @@
         })();
     </script>
 </head>
-<body class="dark-theme">
-    <canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.3;"></canvas>
+<body class="has-background-white">
     
-    <nav>
-        <div class="nav-container">
-            <a href="../index.html" class="nav-brand">C2CAD-Bench</a>
-            <div class="nav-links">
-                <a href="../index.html">Abstract</a>
-                <a href="../index.html#about">About</a>
-                <a href="../index.html#benchmarks">Benchmarks</a>
-                <a href="results.html" class="active">Scoreboard</a>
-                <a href="visualizer.html" class="cta">3D Visualizer</a>
+    <nav class="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="../index.html" style="font-family:'Josefin Sans'; font-weight:700; font-size:1.5rem; color:#143163;">
+                    V2CAD
+                </a>
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-end">
+                    <a class="navbar-item" href="../index.html">Abstract</a>
+                    <a class="navbar-item" href="../index.html#benchmarks">Benchmarks</a>
+                    <a class="navbar-item is-active" href="results.html">Scoreboard</a>
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a class="button link-button" href="visualizer.html">
+                                <span class="icon"><i class="fas fa-cube"></i></span>
+                                <span>3D Visualizer</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div class="dashboard-container">
-        <div class="dashboard-header">
-            <div class="header-text">
-                <h1>Evaluation Scoreboard</h1>
-                <p>Multi-step spatial reasoning benchmarks across frontier LLMs.</p>
-            </div>
-            <div style="display:flex;gap:16px;">
-                <button onclick="location.reload(true)" class="hbtn">↻ Reload</button>
-                <a href="visualizer.html" class="hbtn" style="background:var(--accent);border-color:var(--accent);color:white;">3D Visualizer</a>
-            </div>
+    <div class="container py-6 mt-6">
+        <div class="dashboard-header mb-6">
+            <h1 class="title is-2">Evaluation Scoreboard</h1>
+            <p class="subtitle is-5">Multi-step spatial reasoning benchmarks across frontier LLMs.</p>
         </div>
 
-        <div class="model-toggle-bar" id="model-toggle-bar">
+        <div class="model-toggle-bar mb-5" id="model-toggle-bar">
             <!-- Injected by JS -->
-            <button class="hbtn" id="toggle-all-btn" style="margin-left:auto;">Toggle Extras</button>
         </div>
 
-        <div class="summary-section">
+        <div class="summary-section mb-6">
             <div class="summary-row" id="summary-row">
                 <!-- Injected by JS -->
             </div>
         </div>
 
-        <div class="phase-bar" id="phase-bar">
-            <button class="phase-tab active" data-phase="0">All Phases <span class="badge">75</span></button>
-            <button class="phase-tab" data-phase="1">Phase 1 <span class="badge">18</span></button>
-            <button class="phase-tab" data-phase="2">Phase 2 <span class="badge">18</span></button>
-            <button class="phase-tab" data-phase="3">Phase 3 <span class="badge">18</span></button>
-            <button class="phase-tab" data-phase="4">Phase 4 <span class="badge">21</span></button>
+        <div class="tabs is-boxed mb-5" id="phase-bar-container">
+            <ul id="phase-bar">
+                <li class="is-active" data-phase="0"><a>All Phases <span class="tag is-rounded ml-2">75</span></a></li>
+                <li data-phase="1"><a>Phase 1 <span class="tag is-rounded ml-2">18</span></a></li>
+                <li data-phase="2"><a>Phase 2 <span class="tag is-rounded ml-2">18</span></a></li>
+                <li data-phase="3"><a>Phase 3 <span class="tag is-rounded ml-2">18</span></a></li>
+                <li data-phase="4"><a>Phase 4 <span class="tag is-rounded ml-2">21</span></a></li>
+            </ul>
         </div>
 
         <div class="scoreboard-card">
             <table>
                 <thead id="table-head"></thead>
                 <tbody id="table-body">
-                    <tr><td colspan="100%" style="text-align:center; padding: 100px; color:var(--dark-text-muted);">
+                    <tr><td colspan="100%" style="text-align:center; padding: 100px; color:#94a3b8;">
+                        <span class="icon is-large mb-4"><i class="fas fa-spinner fa-pulse"></i></span><br>
                         Loading evaluation data...
                     </td></tr>
                 </tbody>
@@ -104,24 +152,31 @@
         </div>
     </div>
 
-    <footer>
-        <div class="footer-container">
-            <a href="../index.html" class="footer-logo">C2CAD-Bench</a>
-            <div class="footer-links">
-                <a href="../index.html">Abstract</a>
-                <a href="../index.html#about">About</a>
-                <a href="results.html">Scoreboard</a>
-                <a href="visualizer.html">3D Viewer</a>
-            </div>
-            <p class="footer-copy">&copy; 2026 C2CAD-Bench Research Team. Released under the MIT License.</p>
+    <footer class="footer mt-6">
+        <div class="container has-text-centered">
+            <p>
+                <strong>V2CAD</strong> by Anonymous Authors. 
+                Released under the MIT License.
+            </p>
         </div>
     </footer>
 
-    <script src="../js/background.js"></script>
     <script src="../js/scoreboard.js"></script>
     <script>
         // Start loading data
         window._loadData();
+        
+        // Adjust scoreboard.js expectations if needed
+        // The scoreboard.js might need some tweaks to work with Bulma tabs
+        document.querySelectorAll('#phase-bar li').forEach(tab => {
+            tab.onclick = function() {
+                document.querySelectorAll('#phase-bar li').forEach(t => t.classList.remove('is-active'));
+                this.classList.add('is-active');
+                // Trigger original logic if it exists
+                const phase = this.getAttribute('data-phase');
+                if (window.filterByPhase) window.filterByPhase(phase);
+            };
+        });
     </script>
 </body>
 </html>
