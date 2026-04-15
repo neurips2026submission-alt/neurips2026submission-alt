@@ -14,46 +14,43 @@
     <script src="https://kit.fontawesome.com/5fd1dd8417.js" crossorigin="anonymous"></script>
 
     <!-- Styles -->
+    <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/c2cad.css">
     <link rel="stylesheet" href="../css/dashboard.css">
     
     <style>
-        /* Table enhancements for dark theme */
         .scoreboard-card {
-            background: var(--dark-bg-subtle);
+            background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+            box-shadow: var(--card-shadow);
             overflow: hidden;
-            border: 1px solid var(--dark-border);
+            border: 1px solid var(--border);
         }
         table {
             width: 100%;
             border-collapse: collapse;
         }
         th {
-            background: rgba(0, 0, 0, 0.3);
-            color: var(--dark-accent);
+            background: var(--bg-subtle);
+            color: var(--accent);
             font-family: 'Josefin Sans', sans-serif;
             text-transform: uppercase;
             font-size: 0.8rem;
             letter-spacing: 0.05em;
             padding: 16px !important;
-            border-bottom: 2px solid var(--dark-border);
+            border-bottom: 2px solid var(--border);
         }
         td {
             padding: 14px 16px !important;
-            border-bottom: 1px solid var(--dark-border);
+            border-bottom: 1px solid var(--border);
+            color: var(--text-main);
         }
         .dashboard-header h1 {
             font-family: 'Josefin Sans', sans-serif;
             font-weight: 700;
-            background: linear-gradient(135deg, #fff, var(--dark-accent));
+            background: linear-gradient(135deg, var(--text-main), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-        .phase-tab {
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 600;
         }
     </style>
 
@@ -89,20 +86,20 @@
         })();
     </script>
 </head>
-<body class="dark-theme has-background-dark">
+<body>
     
-    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation" style="background: rgba(10, 10, 10, 0.8) !important; backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.1);">
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation" style="background: rgba(255, 255, 255, 0.8) !important; backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.1);">
         <div class="container">
             <div class="navbar-brand">
-                <a class="navbar-item" href="../index.html" style="font-family:'Josefin Sans'; font-weight:700; font-size:1.5rem; color:#fff;">
+                <a class="navbar-item" href="../index.html" style="font-family:'Josefin Sans'; font-weight:700; font-size:1.5rem; color:var(--accent);">
                     C2CAD-Bench
                 </a>
             </div>
             <div class="navbar-menu">
                 <div class="navbar-end">
-                    <a class="navbar-item has-text-white" href="../index.html">Abstract</a>
-                    <a class="navbar-item has-text-white" href="../index.html#benchmarks">Benchmarks</a>
-                    <a class="navbar-item has-text-white is-active" href="results.html">Scoreboard</a>
+                    <a class="navbar-item" href="../index.html">Abstract</a>
+                    <a class="navbar-item" href="../index.html#benchmarks">Benchmarks</a>
+                    <a class="navbar-item is-active" href="results.html">Scoreboard</a>
                     <div class="navbar-item">
                         <div class="buttons">
                             <a class="button link-button is-rounded" href="visualizer.html">
