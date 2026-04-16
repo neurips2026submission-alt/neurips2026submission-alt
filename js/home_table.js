@@ -12,13 +12,13 @@ const HomeTable = {
     top4: [],
     
     PALETTE: {
-        box:     { color:0x3b82f6, emissive:0x1d4ed8 },
-        cylinder:{ color:0x10b981, emissive:0x064e3b },
-        sphere:  { color:0xf43f5e, emissive:0x9f1239 },
-        pipe:    { color:0xf59e0b, emissive:0x78350f },
-        beam:    { color:0xa78bfa, emissive:0x4c1d95 },
-        cone:    { color:0xec4899, emissive:0x831843 },
-        torus:   { color:0x06b6d4, emissive:0x164e63 },
+        box:     { color:0x64748b, emissive:0x1e293b }, // Slate
+        cylinder:{ color:0x94a3b8, emissive:0x334155 }, // Light Slate
+        sphere:  { color:0x475569, emissive:0x0f172a }, // Dark Slate
+        pipe:    { color:0xcbd5e1, emissive:0x64748b }, // Cool Grey
+        beam:    { color:0x334155, emissive:0x0f172a }, // Navy Slate
+        cone:    { color:0xf1f5f9, emissive:0x94a3b8 }, // Very Light
+        torus:   { color:0x1e293b, emissive:0x0f172a }, // Black Slate
         default: { color:0xd1d5db, emissive:0x374151 }
     },
 
@@ -112,7 +112,7 @@ const HomeTable = {
         cases.forEach((g, rowIdx) => {
             const gIdx = golden.indexOf(g);
             html += `
-                <tr class="reveal reveal-up">
+                <tr>
                     <td class="task-info">
                         <strong>${g.family}</strong><br>
                         <small class="text-muted">${g.difficultyLabel}</small>

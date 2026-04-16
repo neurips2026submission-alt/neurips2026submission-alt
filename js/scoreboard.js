@@ -240,13 +240,32 @@ const Scoreboard = {
     },
 
     toggleFamily(fid) {
-        const row = document.querySelector(`.family-row[data-fid="${fid}"]`);
-        row.classList.toggle('expanded');
+        const targetRow = document.querySelector(`.family-row[data-fid="${fid}"]`);
+        const isCurrentlyExpanded = targetRow.classList.contains('expanded');
+
+        // Collapse all other families
+        document.querySelectorAll('.family-row.expanded').forEach(row => {
+            if (row !== targetRow) {
+                row.classList.remove('expanded');
+                const otherFid = row.dataset.fid;
+                document.querySelectorAll(`.detail-row[data-fid="${otherFid}"]`).forEach(r => {
+                    r.classList.remove('visible');
+                });
+            }
+        });
+
+        // Toggle the target family
+        targetRow.classList.toggle('expanded', !isCurrentlyExpanded);
         document.querySelectorAll(`.detail-row[data-fid="${fid}"]`).forEach(r => {
             const p = parseInt(r.dataset.phase);
             const phaseOk = this.activePhase === 0 || p === this.activePhase;
-            r.classList.toggle('visible', row.classList.contains('expanded') && phaseOk);
+            r.classList.toggle('visible', !isCurrentlyExpanded && phaseOk);
         });
+
+        // Smooth scroll to the expanded family head if expanding
+        if (!isCurrentlyExpanded) {
+            targetRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
     },
 
     applyColumnVisibility() {
