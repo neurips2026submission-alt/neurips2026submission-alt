@@ -241,6 +241,10 @@ footer {
     display: inline-block;
 }
 
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
 .bg-gradient {
     background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
 }
