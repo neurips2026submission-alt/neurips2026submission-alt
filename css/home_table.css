@@ -9,6 +9,13 @@
     background: var(--bg-white);
     border-radius: var(--radius);
     overflow: hidden;
+    min-width: 1000px; /* Ensure table doesn't squish too much */
+}
+
+.table-container {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    -webkit-overflow-scrolling: touch;
 }
 
 .showcase-table thead th {
@@ -19,30 +26,32 @@
     text-transform: uppercase;
     font-size: 0.85rem;
     letter-spacing: 0.05em;
-    padding: 1.5rem 1rem;
+    padding: 1.25rem 1rem;
     border-bottom: 2px solid var(--border);
+    white-space: nowrap;
 }
 
 .showcase-table tbody td {
     vertical-align: middle;
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--border-light);
 }
 
 .showcase-table .task-info {
     padding-left: 1.5rem;
     min-width: 200px;
+    max-width: 240px;
 }
 
 .showcase-table .task-info strong {
     color: var(--text-main);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-family: var(--font-heading);
 }
 
 .home-vp {
-    width: 180px;
-    height: 160px;
+    width: 160px; /* Reduced from 180px */
+    height: 140px; /* Reduced from 160px */
     margin: 0 auto;
     background: radial-gradient(circle at center, #ffffff 0%, #f1f5f9 100%);
     border-radius: var(--radius);
@@ -62,9 +71,13 @@
 }
 
 /* Responsive Table */
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1215px) {
     .home-vp {
-        width: 150px;
-        height: 140px;
+        width: 140px;
+        height: 120px;
+    }
+    .showcase-table .task-info {
+        min-width: 160px;
     }
 }
+
