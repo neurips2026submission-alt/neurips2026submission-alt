@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="css/c2cad.css">
     <link rel="stylesheet" href="css/landing.css">
     <link rel="stylesheet" href="css/home_table.css">
+    <link rel="stylesheet" href="css/dashboard.css">
     <style>
         .publication-title {
             background: linear-gradient(135deg, var(--text-main) 0%, var(--accent) 100%);
@@ -112,51 +113,18 @@
         </div>
     </section>
 
-    <!-- Teaser Section -->
-    <section class="section pt-0">
-        <div class="container is-max-desktop has-text-centered">
-            <figure class="reveal">
-                <img src="results/fig1_overall_rankings.png" alt="Overall Model Rankings Heatmap" style="width: 100%; border-radius: 8px;">
-                <figcaption class="mt-4 has-text-grey">
-                    <strong>Figure 1:</strong> Comparative evaluation of 13 frontier Large Language Models across the C2CAD-Bench spectrum.
-                </figcaption>
-            </figure>
-        </div>
-    </section>
-
-    <!-- Abstract Section -->
-    <section class="section has-background-light">
-        <div class="container is-max-desktop">
-            <h2 class="section-title">Abstract</h2>
-            <div class="content abstract-content">
-                <p>
-                    AI-assisted CAD design relies on a prompt-to-code-to-CAD pipeline, where an LLM generates code for a CAD engine from a natural-language description. Existing benchmarks combine programming proficiency with spatial understanding; reaching a syntactically correct script that places every part at the wrong coordinate passes all execution-based checks. Moreover, image-based evaluation cannot inspect internal geometry such as lattice connectivity or clearance fits. We introduce <strong>C2CAD-BENCH</strong>, a benchmark that isolates 3D spatial reasoning from code-generation proficiency by removing the code layer entirely. Models receive a natural-language engineering specification and must produce a JSON array of geometric primitives, scored deterministically against parametric ground truth without code execution or rendering. Prompts follow a zero-scaffolding methodology that supplies only physical intent, requiring models to derive every coordinate from first principles. The benchmark comprises 25 test families across four phases of cognitive demand (75 test cases, up to 805 shapes), evaluated with a gated three-axis scoring pipeline (Coverage, Geometry, Semantic). Evaluation of 13 frontier LLMs from five providers reveals a persistent coverage–geometry gap of roughly 19 points, systematic primitive type confusion, and that constraint complexity rather than shape count drives difficulty.
-                </p>
-            </div>
-        </div>
-    </section>
-
     <!-- Methodology Section -->
     <section class="section" id="benchmarks">
         <div class="container is-max-desktop">
             <h2 class="section-title">Benchmark Structure & Objectives</h2>
-            <div class="columns is-vcentered">
-                <div class="column is-7">
-                    <div class="content">
-                        <p>C2CAD-Bench evaluates the multi-step spatial reasoning capabilities of LLMs in generating deterministic CAD geometry. The benchmark requires models to map high-level engineering specifications to precise parametric primitives.</p>
-                        <p>Unlike previous shape-focused benchmarks, C2CAD-Bench emphasizes:</p>
-                        <ul>
-                            <li><strong>Geometric Constraints:</strong> Concentricity, patterns, and pathing.</li>
-                            <li><strong>Topological Validity:</strong> Connectivity and manifold verification.</li>
-                            <li><strong>Reasoning Depth:</strong> Multi-phase complexity from primitives to functional assemblies.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="column">
-                    <figure class="reveal">
-                        <img src="results/fig2_score_components.png" alt="Metric Decomposition">
-                    </figure>
-                </div>
+            <div class="content">
+                <p>C2CAD-Bench evaluates the multi-step spatial reasoning capabilities of LLMs in generating deterministic CAD geometry. The benchmark requires models to map high-level engineering specifications to precise parametric primitives.</p>
+                <p>Unlike previous shape-focused benchmarks, C2CAD-Bench emphasizes:</p>
+                <ul>
+                    <li><strong>Geometric Constraints:</strong> Concentricity, patterns, and pathing.</li>
+                    <li><strong>Topological Validity:</strong> Connectivity and manifold verification.</li>
+                    <li><strong>Reasoning Depth:</strong> Multi-phase complexity from primitives to functional assemblies.</li>
+                </ul>
             </div>
 
             <div class="columns is-multiline mt-6">
@@ -182,65 +150,6 @@
         </div>
     </section>
 
-    <!-- Detailed Performance section -->
-    <section class="section has-background-light">
-        <div class="container is-max-desktop">
-            <h2 class="section-title">Detailed Performance Analysis</h2>
-            
-            <figure class="reveal has-text-centered">
-                <img src="results/fig4_phase_performance.png" alt="Phase Performance Analysis" style="max-width: 900px;">
-                <figcaption class="mt-4 has-text-grey">
-                    <strong>Figure 2:</strong> Model performance distributions across the four benchmark phases, highlighting the transition from basic forms to engineering assemblies.
-                </figcaption>
-            </figure>
-
-            <div class="columns is-multiline mt-6">
-                <div class="column is-6">
-                    <h3 class="title is-4 has-text-centered">Spatial Reasoning Signatures</h3>
-                    <figure class="reveal">
-                        <img src="results/fig9_radar_profiles.png" alt="Radar Profiles">
-                    </figure>
-                    <p class="has-text-grey-dark mt-4">
-                        Radar profiles reveal the "spatial signature" of each model family, identifying distinctive reasoning biases and architectural strengths.
-                    </p>
-                </div>
-                <div class="column is-6">
-                    <h3 class="title is-4 has-text-centered">Performance Distributions</h3>
-                    <figure class="reveal">
-                        <img src="results/fig11_violin_distributions.png" alt="Violin Distributions">
-                    </figure>
-                    <p class="has-text-grey-dark mt-4">
-                        Statistical breakdown of score density across different model vendors, showing the stability and ceiling of current spatial models.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Scaling Section -->
-    <section class="section">
-        <div class="container is-max-desktop">
-            <h2 class="section-title">Scaling & Failure Modes</h2>
-            <div class="columns">
-                <div class="column">
-                    <h3 class="title is-5">Difficulty Scaling</h3>
-                    <img src="results/fig5_difficulty_scaling.png" alt="Difficulty Scaling">
-                    <p class="is-size-6 mt-2">Tracking the degradation of coverage and semantic logic as tasks transition from single primitives to multi-part engineering systems.</p>
-                </div>
-                <div class="column">
-                    <h3 class="title is-5">Hallucination Profiles</h3>
-                    <img src="results/fig13_hallucination_analysis.png" alt="Hallucination Analysis">
-                    <p class="is-size-6 mt-2">Distinguishing between structural under-production and excessive "geometric hallucinations" during complex pathing tasks.</p>
-                </div>
-            </div>
-            
-            <figure class="reveal mt-6 has-text-centered">
-                <img src="results/fig3_family_heatmap.png" alt="Global Heatmap">
-                <figcaption class="has-text-grey mt-2"><strong>Figure 3:</strong> Global heatmap of global scores across all 25 test families, revealing specific failure modes in engineering scenarios.</figcaption>
-            </figure>
-        </div>
-    </section>
-
     <!-- Showcase Table Section -->
     <section class="section">
         <div class="container is-max-desktop">
@@ -251,46 +160,80 @@
                     <p class="mt-2 has-text-grey">Loading benchmark results...</p>
                 </div>
             </div>
-            <div class="has-text-centered mt-4">
-                <a href="ui/results.html" class="button is-text is-small">View Full Scoreboard →</a>
+        </div>
+    </section>
+
+    <!-- Evaluation Scoreboard Section -->
+    <section class="section has-background-light">
+        <div class="container py-6">
+            <h2 class="section-title">Evaluation Scoreboard</h2>
+            <p class="subtitle is-5 mb-5">Experimental results across four phases of cognitive demand.</p>
+            
+            <div class="is-flex is-align-items-center is-flex-wrap-wrap mb-5" style="gap: 12px;">
+                <div class="model-toggle-bar" id="model-toggle-bar" style="flex-grow: 1;">
+                    <!-- Injected by JS -->
+                </div>
+                <button id="toggle-all-btn" class="button is-small is-rounded is-dark">
+                    <span class="icon is-small"><i class="fas fa-eye"></i></span>
+                    <span>Toggle All Views</span>
+                </button>
+            </div>
+
+            <div class="summary-section mb-6">
+                <div class="summary-row" id="summary-row" style="display: flex; overflow-x: auto; gap: 16px; padding-bottom: 20px;">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
+
+            <div class="tabs is-boxed mb-5" id="phase-bar-container">
+                <ul id="phase-bar-list">
+                    <li class="is-active phase-tab" data-phase="0"><a>All Phases <span class="tag is-rounded ml-2">75</span></a></li>
+                    <li class="phase-tab" data-phase="1"><a>Phase 1 <span class="tag is-rounded ml-2">18</span></a></li>
+                    <li class="phase-tab" data-phase="2"><a>Phase 2 <span class="tag is-rounded ml-2">18</span></a></li>
+                    <li class="phase-tab" data-phase="3"><a>Phase 3 <span class="tag is-rounded ml-2">18</span></a></li>
+                    <li class="phase-tab" data-phase="4"><a>Phase 4 <span class="tag is-rounded ml-2">21</span></a></li>
+                </ul>
+            </div>
+
+            <div class="scoreboard-card" style="background: white; border-radius: 12px; border: 1px solid var(--border); overflow-x: auto;">
+                <table class="table is-fullwidth">
+                    <thead id="table-head"></thead>
+                    <tbody id="table-body">
+                        <tr><td colspan="100%" style="text-align:center; padding: 100px; color:#94a3b8;">
+                            <span class="icon is-large mb-4"><i class="fas fa-spinner fa-pulse"></i></span><br>
+                            Loading evaluation data...
+                        </td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section class="section has-background-light">
+    <!-- Teaser Section -->
+    <section class="section">
+        <div class="container is-max-desktop has-text-centered">
+            <figure class="reveal">
+                <img src="results/fig1_overall_rankings.png" alt="Overall Model Rankings Heatmap" style="width: 100%; border-radius: 8px;">
+                <figcaption class="mt-4 has-text-grey">
+                    <strong>Figure 1:</strong> Comparative evaluation of 13 frontier Large Language Models across the C2CAD-Bench spectrum.
+                </figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Abstract Section -->
+    <section class="section has-background-white">
         <div class="container is-max-desktop">
-            <h2 class="section-title">Showcase Gallery</h2>
-            <div class="columns is-centered">
-                <div class="column is-5">
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image">
-                                <img src="results/fig17_spiral_staircase_comparison.png" alt="Spiral Staircase">
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <p class="title is-5">Spiral Staircase (Phase 1)</p>
-                            <p class="subtitle is-6">Tests trigonometric accuracy and polar pattern repetition in vertical space.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="column is-5">
-                    <div class="card">
-                        <div class="card-image">
-                            <figure class="image">
-                                <img src="results/fig21_radiolarian_skeleton_comparison.png" alt="Radiolarian Skeleton">
-                            </figure>
-                        </div>
-                        <div class="card-content">
-                            <p class="title is-5">Radiolarian Skeleton (Phase 4)</p>
-                            <p class="subtitle is-6">Tests high-order recursive patterns and geodesic frame generation in bio-inspired CAD.</p>
-                        </div>
-                    </div>
-                </div>
+            <h2 class="section-title">Abstract</h2>
+            <div class="content abstract-content">
+                <p>
+                    AI-assisted CAD design relies on a prompt-to-code-to-CAD pipeline, where an LLM generates code for a CAD engine from a natural-language description. Existing benchmarks combine programming proficiency with spatial understanding; reaching a syntactically correct script that places every part at the wrong coordinate passes all execution-based checks. Moreover, image-based evaluation cannot inspect internal geometry such as lattice connectivity or clearance fits. We introduce <strong>C2CAD-BENCH</strong>, a benchmark that isolates 3D spatial reasoning from code-generation proficiency by removing the code layer entirely. Models receive a natural-language engineering specification and must produce a JSON array of geometric primitives, scored deterministically against parametric ground truth without code execution or rendering. Prompts follow a zero-scaffolding methodology that supplies only physical intent, requiring models to derive every coordinate from first principles. The benchmark comprises 25 test families across four phases of cognitive demand (75 test cases, up to 805 shapes), evaluated with a gated three-axis scoring pipeline (Coverage, Geometry, Semantic). Evaluation of 13 frontier LLMs from five providers reveals a persistent coverage–geometry gap of roughly 19 points, systematic primitive type confusion, and that constraint complexity rather than shape count drives difficulty.
+                </p>
             </div>
         </div>
     </section>
+
+
 
     <!-- BibTeX Section -->
     <section class="section" id="citation">
@@ -371,6 +314,7 @@
                     await Promise.all(phases.map(p => load(`./results/showcase_db_${p}.js?v=${ts}`)));
                     console.log('Homepage data loaded successfully.');
                     window.dispatchEvent(new Event('CG3D_DATA_READY'));
+                    window.dispatchEvent(new Event('CG3D_SCORE_READY'));
                 } catch (e) {
                     console.error('Data loading error:', e);
                 }
@@ -390,5 +334,6 @@
         }
     </script>
     <script type="module" src="js/home_table.js"></script>
+    <script src="js/scoreboard.js"></script>
 </body>
 </html>
