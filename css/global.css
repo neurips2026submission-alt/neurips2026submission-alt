@@ -74,8 +74,8 @@ a {
 nav {
     position: sticky;
     top: 0;
-    z-index: 1000;
-    background: rgba(255, 255, 255, 0.8) !important;
+    z-index: 2000;
+    background: rgba(255, 255, 255, 0.85) !important;
     backdrop-filter: blur(12px) saturate(180%);
     -webkit-backdrop-filter: blur(12px) saturate(180%);
     border-bottom: 1px solid rgba(226, 232, 240, 0.5);
@@ -88,7 +88,7 @@ nav {
 }
 
 .navbar-item {
-    color: var(--text-muted) !important;
+    color: var(--text-light) !important;
     font-weight: 500;
     padding: 0.5rem 1.25rem;
     transition: all 0.2s ease;
@@ -98,12 +98,12 @@ nav {
 
 .navbar-item:hover {
     background-color: var(--accent-soft) !important;
-    color: var(--accent) !important;
+    color: var(--primary) !important;
 }
 
 .navbar-item.is-active {
     background-color: transparent !important;
-    color: var(--accent) !important;
+    color: var(--primary) !important;
     font-weight: 700 !important;
 }
 
@@ -122,7 +122,7 @@ nav {
     font-family: 'Josefin Sans', 'Outfit', sans-serif;
     font-weight: 800;
     font-size: 1.5rem;
-    color: var(--accent) !important;
+    color: var(--primary) !important;
     text-decoration: none;
     letter-spacing: -0.01em;
     background-color: transparent !important;
