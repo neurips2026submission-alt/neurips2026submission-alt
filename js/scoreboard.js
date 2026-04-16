@@ -76,7 +76,7 @@ const Scoreboard = {
 
         this.modelIds.forEach(m => {
             const chip = document.createElement('span');
-            chip.className = `model-chip ${this.visibleModels.has(m) ? 'active' : ''}`;
+            chip.className = `model-chip ${this.visibleModels.has(m) ? 'is-active' : ''}`;
             chip.dataset.model = m;
             const prov = this.getProvider(m);
             chip.innerHTML = `<span class="provider-dot dot-${prov}"></span>${this.getPrettyName(m)}`;
@@ -90,10 +90,10 @@ const Scoreboard = {
     toggleModel(m, chip) {
         if (this.visibleModels.has(m)) {
             this.visibleModels.delete(m);
-            chip.classList.remove('active');
+            chip.classList.remove('is-active');
         } else {
             this.visibleModels.add(m);
-            chip.classList.add('active');
+            chip.classList.add('is-active');
         }
         this.applyColumnVisibility();
     },
@@ -244,7 +244,7 @@ const Scoreboard = {
         document.querySelectorAll('.phase-tab').forEach(tab => {
             tab.onclick = () => {
                 this.activePhase = parseInt(tab.dataset.phase);
-                document.querySelectorAll('.phase-tab').forEach(t => t.classList.toggle('active', t === tab));
+                document.querySelectorAll('.phase-tab').forEach(t => t.classList.toggle('is-active', t === tab));
                 this.applyPhaseFilter();
             };
         });
