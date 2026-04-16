@@ -16,8 +16,8 @@
     
     /* --- Text --- */
     --text-main: #0f172a;          /* Rich Dark */
-    --text-muted: #475569;         /* Slate Grey */
-    --text-light: #64748b;         /* Light Slate */
+    --text-muted: #334155;         /* Darker Slate Grey for better contrast */
+    --text-light: #475569;         /* Slate Grey */
     
     /* --- Borders & Shadows --- */
     --border: #e2e8f0;
