@@ -5,50 +5,50 @@
 .showcase-table {
     border-collapse: separate;
     border-spacing: 0;
-    margin-top: 2rem;
-    background: white;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    border-radius: 12px;
+    margin-top: 1rem;
+    background: var(--bg-white);
+    border-radius: var(--radius);
     overflow: hidden;
 }
 
 .showcase-table thead th {
-    background: #f8fafc;
+    background: var(--bg-subtle);
     color: var(--text-main);
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: var(--font-heading);
     font-weight: 700;
     text-transform: uppercase;
     font-size: 0.85rem;
     letter-spacing: 0.05em;
-    padding: 1.25rem 1rem;
-    border-bottom: 2px solid #edf2f7;
+    padding: 1.5rem 1rem;
+    border-bottom: 2px solid var(--border);
 }
 
 .showcase-table tbody td {
     vertical-align: middle;
-    padding: 0.5rem;
-    border-bottom: 1px solid #f1f5f9;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-light);
 }
 
 .showcase-table .task-info {
     padding-left: 1.5rem;
-    min-width: 180px;
+    min-width: 200px;
 }
 
 .showcase-table .task-info strong {
-    color: var(--accent);
-    font-size: 1rem;
+    color: var(--text-main);
+    font-size: 1.1rem;
+    font-family: var(--font-heading);
 }
 
 .home-vp {
-    width: 200px;
-    height: 180px;
+    width: 180px;
+    height: 160px;
     margin: 0 auto;
-    background: radial-gradient(circle at center, #fdfdfd 0%, #f7f9fc 100%);
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
+    background: radial-gradient(circle at center, #ffffff 0%, #f1f5f9 100%);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
     cursor: grab;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .home-vp:active {
@@ -58,6 +58,7 @@
 .home-vp:hover {
     border-color: var(--accent);
     transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 /* Responsive Table */
@@ -65,12 +66,5 @@
     .home-vp {
         width: 150px;
         height: 140px;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .showcase-table {
-        display: block;
-        overflow-x: auto;
     }
 }

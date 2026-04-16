@@ -1,27 +1,38 @@
 /* --- Global Variables & Tokens --- */
 :root {
+    /* --- Branding Colors --- */
+    --primary: #1e293b;            /* Deep Slate / Navy */
+    --primary-light: #334155;
+    --accent: #2563eb;             /* Vibrant Blue */
+    --accent-hover: #1d4ed8;
+    --accent-soft: rgba(37, 99, 235, 0.08);
+    --secondary: #9333ea;          /* Purple */
+    
+    /* --- Backgrounds --- */
     --bg-page: #fdfdfe;
     --bg-subtle: #f8fafc;
+    --bg-white: #ffffff;
     --bg-grid: rgba(37, 99, 235, 0.03);
-    --text-main: #0f172a;
-    --text-muted: #475569;
-    --text-light: #64748b;
-    --accent: #2563eb;
-    --accent-soft: rgba(37, 99, 235, 0.1);
-    --accent-hover: #1d4ed8;
+    
+    /* --- Text --- */
+    --text-main: #0f172a;          /* Rich Dark */
+    --text-muted: #475569;         /* Slate Grey */
+    --text-light: #64748b;         /* Light Slate */
+    
+    /* --- Borders & Shadows --- */
     --border: #e2e8f0;
-    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    --border-light: rgba(226, 232, 240, 0.5);
     --radius: 12px;
+    --radius-full: 9999px;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    
+    /* --- Typography --- */
     --font-main: 'Inter', system-ui, -apple-system, sans-serif;
     --font-heading: 'Outfit', sans-serif;
-    
-    /* Dark Theme Variations */
-    --dark-bg: #0b1121;
-    --dark-bg-subtle: #0f172a;
-    --dark-text: #f8fafc;
-    --dark-text-muted: #94a3b8;
-    --dark-border: rgba(255, 255, 255, 0.08);
-    --dark-accent: #60a5fa;
+    --font-mono: 'Roboto Mono', monospace;
 }
 
 /* --- Base & Reset --- */
@@ -202,24 +213,79 @@ footer {
     padding: 100px 0;
 }
 
-.card {
-    background: white;
+.glassmorphism {
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.premium-card {
+    background: var(--bg-white);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    box-shadow: var(--card-shadow);
+    box-shadow: var(--shadow-md);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+.premium-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow);
+    border-color: var(--accent);
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.bg-gradient {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+}
+
+.btn-premium {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    font-size: 15px;
+}
+
+.btn-premium.is-primary {
+    background: var(--accent);
+    color: var(--bg-white);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.btn-premium.is-primary:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+}
+
+.btn-premium.is-secondary {
+    background: var(--bg-white);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+}
+
+.btn-premium.is-secondary:hover {
+    background: var(--bg-subtle);
+    transform: translateY(-2px);
 }
 
 /* --- Refresh / Tool Buttons --- */
 .hbtn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--dark-border);
-    color: white;
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
     padding: 8px 16px;
     border-radius: 8px;
     font-size: 13px;
@@ -232,8 +298,9 @@ footer {
 }
 
 .hbtn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--dark-text-muted);
+    background: var(--bg-subtle);
+    border-color: var(--text-light);
+    color: var(--text-main);
 }
 
 /* --- Progress Bar --- */
@@ -242,7 +309,7 @@ footer {
     top: 0;
     left: 0;
     height: 3px;
-    background: linear-gradient(to right, var(--accent), #c084fc);
+    background: linear-gradient(to right, var(--accent), var(--secondary));
     z-index: 2000;
     width: 0%;
     transition: width 0.1s;
